@@ -31,6 +31,14 @@ const AddAnimalForm: React.FC = () => {
         try {
             const newAnimal = await createAnimal(animal);
             dispatch(addAnimal(newAnimal));
+            
+            setName('');
+            setPrice(0);
+            setDescription('');
+            setCategory('');
+            setIsPopular(false);
+            setStock(0);
+            setImageUrl('');
         } catch (error) {
             console.error('Error adding animal:', error);
             alert('Failed to add animal. Please check the console for details.');
