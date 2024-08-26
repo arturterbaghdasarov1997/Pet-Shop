@@ -1,28 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store/store";
-import { setAnimals } from "../features/animalsSlice";
-import { fetchAnimals } from "../services/apiService";
+import { fetchAnimalsThunk } from "../features/animalThunk";
 
-const AnimalList: React.FC = () => {
+const AnimalPage: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
-    const animals = useSelector((state: RootState) => state.animals.animals);
+    const { animals, status, error } = useSelector((state: RootState) => state.animals);
 
     useEffect(() => {
-        const loadAnimals = async () => {
-            const data = await fetchAnimals();
-            console.log("Fetched animals: ", data);
-            dispatch(setAnimals(data));
-        };
+        if (status === 'idle') {
+            dispatch(fetchAnimalsThunk());
+        }
+    }, [dispatch, status]);
 
-        loadAnimals();
-    }, [dispatch]);
-
-    console.log("Current animals in state: ", animals);
+    if (status === 'loading') return <p>Loading...</p>;
+    if (status === 'failed') return <p>Error: {error}</p>;
 
     return (
         <div>
-            <h2>Pets</h2>
+            <h2>Pet List</h2>
             <ul>
                 {animals.map(animal => (
                     <li key={animal.id}>
@@ -40,4 +36,4 @@ const AnimalList: React.FC = () => {
     );
 };
 
-export default AnimalList;
+export default AnimalPage;
