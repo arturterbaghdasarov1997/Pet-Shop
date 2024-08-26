@@ -11,11 +11,14 @@ const AnimalList: React.FC = () => {
     useEffect(() => {
         const loadAnimals = async () => {
             const data = await fetchAnimals();
+            console.log("Fetched animals: ", data);
             dispatch(setAnimals(data));
         };
 
         loadAnimals();
     }, [dispatch]);
+
+    console.log("Current animals in state: ", animals);
 
     return (
         <div>
@@ -23,9 +26,9 @@ const AnimalList: React.FC = () => {
             <ul>
                 {animals.map(animal => (
                     <li key={animal.id}>
-                         <img src={animal.imageUrl || ''} alt={animal.name} />
+                        <img src={animal.imageUrl || ''} alt={animal.name} />
                         <p>Name: {animal.name}</p>
-                        <p>Price: {animal.price} GEL</p>
+                        <p>Price: {animal.price} ₾</p>
                         <p>Description: {animal.description}</p>
                         <p>Category: {animal.category}</p>
                         <p>{animal.isPopular ? "Popular" : "Not Popular"}</p>

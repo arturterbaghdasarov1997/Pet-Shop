@@ -62,7 +62,8 @@ export const createAnimal = async (animal: Animal) => {
             throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
         }
 
-        return await response.json();
+        const result = await response.json();
+        return result.length ? result : [animal];
     } catch (error) {
         console.error('Error creating animal:', error);
         throw error;
