@@ -19,6 +19,7 @@ const AddAnimalForm: React.FC = () => {
         e.preventDefault();
         
         const animal = {
+            id: crypto.randomUUID(),
             name,
             price,
             description,
@@ -31,7 +32,7 @@ const AddAnimalForm: React.FC = () => {
         try {
             const newAnimal = await createAnimal(animal);
             dispatch(addAnimal(newAnimal));
-            
+
             setName('');
             setPrice(0);
             setDescription('');

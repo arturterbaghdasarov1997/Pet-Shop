@@ -16,6 +16,8 @@ const AnimalPage: React.FC = () => {
     if (status === 'loading') return <p>Loading...</p>;
     if (status === 'failed') return <p>Error: {error}</p>;
 
+    console.log('Animals:', animals);
+
     return (
         <div>
             <h2>Pet List</h2>
