@@ -1,5 +1,4 @@
 const API_KEY = process.env.REACT_APP_API_KEY;
-const API_URL = '/api/v1';
 
 export const fetchData = async (url: string, options: RequestInit = {}) => {
     try {
@@ -18,7 +17,7 @@ export const fetchData = async (url: string, options: RequestInit = {}) => {
 
 export const fetchAnimals = async () => {
     try {
-        const data = await fetchData(`${API_URL}/animals`);
+        const data = await fetchData('/api/v1/animals');
         return Array.isArray(data) ? data : [];
     } catch (error) {
         console.error('Error fetching animals:', error);
@@ -28,7 +27,7 @@ export const fetchAnimals = async () => {
 
 export const fetchCategories = async () => {
     try {
-        return await fetchData(`${API_URL}/categories`);
+        return await fetchData('/api/v1/categories');
     } catch (error) {
         console.error('Error fetching categories:', error);
         return [];
@@ -47,7 +46,7 @@ interface Animal {
 
 export const createAnimal = async (animal: Animal) => {
     try {
-        const response = await fetch(`${API_URL}/animals`, {
+        const response = await fetch('/api/v1/animals', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,14 +70,14 @@ export const createAnimal = async (animal: Animal) => {
 };
 
 export const updateAnimal = async (animal: Animal) => {
-    return await fetchData(`${API_URL}/animals/:id`, {
+    return await fetchData('/api/animals/:id', {
         method: 'PUT',
         body: JSON.stringify(animal),
     });
 };
 
 export const deleteAnimal = async () => {
-    return await fetchData(`${API_URL}/animals/:id`, {
+    return await fetchData('/api/animals/:id', {
         method: 'DELETE',
     });
 };
