@@ -6,8 +6,8 @@ const Header: React.FC = () => {
         <header>
             <nav>
                 <ul>
-                    <li><Link to="/">Add Pets</Link></li>
-                    <li><Link to="/pets">Pets</Link></li>
+                    <Link to="/">Add Pets</Link>
+                    <Link to="/pets">Pets</Link>
                 </ul>
             </nav>
         </header>
