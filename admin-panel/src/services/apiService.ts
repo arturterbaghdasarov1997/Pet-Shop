@@ -17,20 +17,25 @@ export const fetchData = async (url: string, options: RequestInit = {}) => {
 
 export const fetchAnimals = async () => {
     try {
-        const data = await fetchData('/api/v1/animals');
+        const response = await fetch('https://crudapi.co.uk/api/v1/animals', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Fetch error:', response.status, errorText);
+            throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
         return Array.isArray(data) ? data : [];
     } catch (error) {
         console.error('Error fetching animals:', error);
-        return [];
-    }
-};
-
-export const fetchCategories = async () => {
-    try {
-        return await fetchData('/api/v1/categories');
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-        return [];
+        throw error;
     }
 };
 
@@ -41,12 +46,11 @@ interface Animal {
     category: string;
     isPopular: boolean;
     stock: number;
-    imageUrl?: string;
 }
 
 export const createAnimal = async (animal: Animal) => {
     try {
-        const response = await fetch('/api/v1/animals', {
+        const response = await fetch('https://crudapi.co.uk/api/v1/animals', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -70,14 +74,14 @@ export const createAnimal = async (animal: Animal) => {
 };
 
 export const updateAnimal = async (animal: Animal) => {
-    return await fetchData('/api/animals/:id', {
+    return await fetchData('https://crudapi.co.uk/api/v1/animals/:id', {
         method: 'PUT',
         body: JSON.stringify(animal),
     });
 };
 
 export const deleteAnimal = async () => {
-    return await fetchData('/api/animals/:id', {
+    return await fetchData('https://crudapi.co.uk/api/v1/animals/:id', {
         method: 'DELETE',
     });
 };

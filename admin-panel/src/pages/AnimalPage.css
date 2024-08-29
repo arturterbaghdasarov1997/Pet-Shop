@@ -1,0 +1,31 @@
+.animal-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.animal-list-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.animal-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+}
+
+.animal-card img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.animal-card p {
+    margin: 5px 0;
+}

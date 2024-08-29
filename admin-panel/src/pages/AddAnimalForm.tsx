@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/store';
 import { addAnimal } from '../features/animalsSlice';
 import { createAnimal } from '../services/apiService';
+import './AddAnimalForm.css';
 
 const AddAnimalForm: React.FC = () => {
     const [name, setName] = useState('');
@@ -11,7 +12,6 @@ const AddAnimalForm: React.FC = () => {
     const [category, setCategory] = useState('');
     const [isPopular, setIsPopular] = useState(false);
     const [stock, setStock] = useState(0);
-    const [imageUrl, setImageUrl] = useState('');
 
     const dispatch: AppDispatch = useDispatch();
 
@@ -26,20 +26,19 @@ const AddAnimalForm: React.FC = () => {
             category,
             isPopular,
             stock,
-            imageUrl,
         };
-
+    
         try {
             const newAnimal = await createAnimal(animal);
-            dispatch(addAnimal(newAnimal));
-
-            setName('');
-            setPrice(0);
-            setDescription('');
-            setCategory('');
-            setIsPopular(false);
-            setStock(0);
-            setImageUrl('');
+            if (newAnimal) {
+                dispatch(addAnimal(newAnimal));
+                setName('');
+                setPrice(0);
+                setDescription('');
+                setCategory('');
+                setIsPopular(false);
+                setStock(0);
+            }
         } catch (error) {
             console.error('Error adding animal:', error);
             alert('Failed to add animal. Please check the console for details.');
@@ -47,7 +46,7 @@ const AddAnimalForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form-container" onSubmit={handleSubmit}>
             <h2>Add Pet</h2>
             <label>
                 Name:
@@ -100,14 +99,6 @@ const AddAnimalForm: React.FC = () => {
                     value={stock}
                     onChange={(e) => setStock(Number(e.target.value))}
                     required
-                />
-            </label>
-            <label>
-                Image URL:
-                <input
-                    type="text"
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
                 />
             </label>
             <button type='submit'>Add Pet</button>

@@ -6,9 +6,13 @@ export const fetchAnimalsThunk = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const data = await fetchAnimals();
+            if (!Array.isArray(data)) {
+                throw new Error('Invalid data format');
+            }
             return data;
         } catch (error) {
-            return rejectWithValue(error);
+            console.error('Error fetching animals:', error);
+            return rejectWithValue('Failed to fetch animals.');
         }
     }
 );
